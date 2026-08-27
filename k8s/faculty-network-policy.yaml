@@ -1,17 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: student-isolation
-  namespace: student
+  name: faculty-isolation
+  namespace: faculty
 spec:
   podSelector: {}
   policyTypes:
+    - Ingress
     - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: faculty
   egress:
     - to:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: student
+              kubernetes.io/metadata.name: faculty
     - to:
         - namespaceSelector:
             matchLabels:
